@@ -1,0 +1,6 @@
+/*
+ * Copyright 2026 IceRock MAG Inc. Use of this source code is governed by the Apache 2.0 license.
+ */
+package com.icerockdev.boko.konformstarter
+
+data class FieldError(val field: String, val message: String)
