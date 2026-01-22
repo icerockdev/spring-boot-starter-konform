@@ -1,5 +1,9 @@
+@file:Suppress("ObjectLiteralToLambda")
+
 import java.util.Base64
+import org.jreleaser.gradle.plugin.dsl.deploy.maven.MavenCentralMavenDeployer
 import org.jreleaser.model.Active
+import org.gradle.api.Action
 
 plugins {
     kotlin("jvm") version "2.2.10"
@@ -7,7 +11,7 @@ plugins {
     id("maven-publish")
     id("java-library")
     id("signing")
-    id("org.jreleaser") version "1.22.0"
+    id("org.jreleaser") version "1.18.0"
 }
 
 group = "com.icerockdev.boko"
@@ -40,6 +44,12 @@ tasks.test {
 
 kotlin {
     jvmToolchain(21)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withJavadocJar()
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -84,7 +94,7 @@ publishing {
         }
 
         signing {
-            setRequired({!properties.containsKey("libraryPublishToMavenLocal")})
+            setRequired({ !properties.containsKey("libraryPublishToMavenLocal") })
             val signingKeyId: String? = System.getenv("SIGNING_KEY_ID")
             val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
             val signingKey: String? = System.getenv("SIGNING_KEY")?.let { base64Key ->
@@ -110,18 +120,20 @@ jreleaser {
     }
     deploy {
         maven {
-            mavenCentral.create("sonatype") {
-                enabled = !properties.containsKey("libraryPublishToMavenLocal")
-                applyMavenCentralRules = true
-                sign = false
-                active = Active.ALWAYS
-                url = "https://central.sonatype.com/api/v1/publisher"
-                stagingRepository(layout.buildDirectory.dir(publishRepositoryName).get().toString())
-                setAuthorization("Basic")
-                retryDelay = 60
-                username = System.getenv("OSSRH_USER")
-                password = System.getenv("OSSRH_KEY")
-            }
+            mavenCentral.create("sonatype", object : Action<MavenCentralMavenDeployer> {
+                override fun execute(t: MavenCentralMavenDeployer) = t.run {
+                    enabled = !properties.containsKey("libraryPublishToMavenLocal")
+                    applyMavenCentralRules = true
+                    sign = false
+                    active = Active.ALWAYS
+                    url = "https://central.sonatype.com/api/v1/publisher"
+                    stagingRepository(layout.buildDirectory.dir(publishRepositoryName).get().toString())
+                    setAuthorization("Basic")
+                    retryDelay = 60
+                    username = System.getenv("OSSRH_USER")
+                    password = System.getenv("OSSRH_KEY")
+                }
+            })
         }
     }
 }
