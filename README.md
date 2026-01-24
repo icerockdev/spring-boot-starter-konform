@@ -1,6 +1,6 @@
 # Spring Boot Starter Konform
 
-[![Maven Central](https://img.shields.io/maven-central/v/dev.icerock/spring-boot-starter-konform.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22dev.icerock%22%20AND%20a:%22spring-boot-starter-konform%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.icerockdev.boko/spring-boot-starter-konform.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.icerockdev.boko/spring-boot-starter-konform)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A Spring Boot Starter for seamless integration with [Konform](https://github.com/konform-kt/konform) validation library, providing a type-safe and flexible way to validate your request DTOs in Spring Boot applications.
