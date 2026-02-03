@@ -18,7 +18,7 @@ Add the following dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.icerockdev.boko:spring-boot-starter-konform:0.1.0")
+    implementation("com.icerockdev.boko:spring-boot-starter-konform:0.1.1")
 }
 ```
 
