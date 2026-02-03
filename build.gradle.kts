@@ -6,8 +6,8 @@ import org.jreleaser.model.Active
 import org.gradle.api.Action
 
 plugins {
-    kotlin("jvm") version "2.2.10"
-    kotlin("kapt") version "2.2.10"
+    kotlin("jvm") version "2.0.21"
+    kotlin("kapt") version "2.0.21"
     id("maven-publish")
     id("java-library")
     id("signing")
@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.icerockdev.boko"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop:3.1.12")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.21")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.5.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.0")
     testImplementation("org.springframework.boot:spring-boot-starter-web:3.1.12")
