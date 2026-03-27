@@ -3,12 +3,16 @@
  */
 package com.icerockdev.boko.konformstarter
 
+import com.icerockdev.boko.konformstarter.configuration.MessageFormatterConfiguration
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 
 @AutoConfiguration
-@Import(KonformValidationAspect::class)
+@Import(
+    KonformValidationAspect::class,
+    MessageFormatterConfiguration::class,
+)
 open class KonformValidationAutoConfiguration {
 
     @Bean
