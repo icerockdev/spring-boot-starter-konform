@@ -5,6 +5,7 @@ package com.icerockdev.boko.konformstarter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.icerockdev.boko.konformstarter.common.TestApplication
+import com.icerockdev.boko.konformstarter.configuration.MessageFormatterConfiguration
 import com.icerockdev.boko.konformstarter.presentation.TestController
 import com.icerockdev.boko.konformstarter.presentation.TestRequest
 import com.icerockdev.boko.konformstarter.presentation.TestValidator
@@ -27,6 +28,7 @@ import org.springframework.test.web.servlet.request
         TestApplication::class,
         TestController::class,
         TestValidator::class,
+        MessageFormatterConfiguration::class,
     ]
 )
 @AutoConfigureMockMvc

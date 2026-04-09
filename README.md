@@ -18,7 +18,7 @@ Add the following dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.icerockdev.boko:spring-boot-starter-konform:0.1.2")
+    implementation("com.icerockdev.boko:spring-boot-starter-konform:0.1.3")
 }
 ```
 
@@ -46,6 +46,7 @@ data class AddressRequest(
 ### 2. Create a Validator
 
 ```kotlin
+@Component
 class CreateUserRequestValidator : RequestValidator<CreateUserRequest> {
     override val validator = Validation.Companion<CreateUserRequest> {
         CreateUserRequest::username {
@@ -129,6 +130,39 @@ class GlobalExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.UNPROCESSABLE_ENTITY)
             .body(mapOf("errors" to errors))
+    }
+}
+```
+
+### Using localization
+
+Create your own implementation of `ConformValidationMessageFormatter`. For example:
+
+```kotlin
+@Component
+class KonformValidationMessageFormatterWithLocalization(
+    private val messageSource: MessageSource,
+) : ConformValidationMessageFormatter {
+    override fun getMessage(code: String, userContext: Any?): String {
+        return messageSource.getMessage(code, emptyArray(), LocaleContextHolder.getLocale()).let {
+            if (userContext != null) {
+                if (userContext is Collection<Any?>) {
+                    it.format(*userContext.toTypedArray())
+                } else it.format(userContext)
+            } else it
+        }
+    }
+}
+```
+
+Update validators:
+```kotlin
+@Component
+class CreateUserRequestValidator : RequestValidator<CreateUserRequest> {
+    override val validator = Validation.Companion<CreateUserRequest> {
+        CreateUserRequest::username {
+            length(min = 3, max = 50) hint LK.usernameLength
+        }
     }
 }
 ```

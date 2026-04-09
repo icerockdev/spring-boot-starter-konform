@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.icerockdev.boko"
-version = "0.1.2"
+version = "0.1.3"
 
 repositories {
     mavenCentral()
@@ -94,7 +94,7 @@ publishing {
         }
 
         signing {
-            setRequired({ !properties.containsKey("libraryPublishToMavenLocal") })
+            setRequired({ !properties.containsKey("publishToMavenLocal") })
             val signingKeyId: String? = System.getenv("SIGNING_KEY_ID")
             val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
             val signingKey: String? = System.getenv("SIGNING_KEY")?.let { base64Key ->
